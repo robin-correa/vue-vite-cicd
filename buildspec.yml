@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+
+  build:
+    commands:
+      - echo "Building Vue app..."
+      - npm run build
+      
+  post_build:
+    commands:
+      - echo "Uploading / Syncing to S3"
+      - aws s3 sync ./dist s3://vue-cicd
+
+artifacts:
+  base-directory: dist
+  files:
+    - '**/*'
